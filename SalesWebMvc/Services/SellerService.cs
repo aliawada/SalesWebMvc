@@ -1,5 +1,6 @@
 ﻿using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
@@ -25,7 +26,7 @@ namespace SalesWebMvc.Services
 
         public Seller FindById(int id)
         {
-            var seller = _context.Seller.SingleOrDefault(obj => obj.Id == id);
+            var seller = _context.Seller.Include(obj => obj.Department).SingleOrDefault(obj => obj.Id == id);
             if (seller == null)
             {
                 throw new KeyNotFoundException($"Seller with Id {id} not found.");
