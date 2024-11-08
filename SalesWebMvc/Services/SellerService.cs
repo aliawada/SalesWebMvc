@@ -22,5 +22,25 @@ namespace SalesWebMvc.Services
             _context.Add(obj);
             _context.SaveChanges();
         }
+
+        public Seller FindById(int id)
+        {
+            var seller = _context.Seller.SingleOrDefault(obj => obj.Id == id);
+            if (seller == null)
+            {
+                throw new KeyNotFoundException($"Seller with Id {id} not found.");
+            }
+            return seller;
+        }
+
+        public void Remove(int id)
+        {
+            var obj = _context.Seller.Find(id);
+            if (obj != null)
+            {
+                _context.Seller.Remove(obj);
+                _context.SaveChanges();
+            }
+        }
     }
 }
